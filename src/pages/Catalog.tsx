@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Category, Product } from '../types';
 import ProductSheet from '../components/ProductSheet';
+import { apiUrl } from '../api';
 
 export default function Catalog() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -14,7 +15,7 @@ export default function Catalog() {
   useEffect(() => {
     const fetchCatalog = async () => {
       try {
-        const res = await fetch('/api/catalog');
+        const res = await fetch(apiUrl('/api/catalog'));
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to fetch catalog');
         

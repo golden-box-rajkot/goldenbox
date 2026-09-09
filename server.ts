@@ -5,11 +5,34 @@ import crypto from 'crypto';
 import { google } from "googleapis";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
+import cors from "cors";
 
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
+
+  // Support secure cookies behind reverse proxies
+  app.enable('trust proxy');
+
+  const allowedOrigins = process.env.FRONTEND_ORIGIN
+    ? process.env.FRONTEND_ORIGIN.split(',').map(o => o.trim().replace(/\/+$/, '')).filter(Boolean)
+    : [];
+
+  const corsOptions: cors.CorsOptions = {
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      const normalizedOrigin = origin.replace(/\/+$/, '');
+      if (allowedOrigins.length === 0 || allowedOrigins.includes(normalizedOrigin)) {
+        return callback(null, true);
+      }
+      return callback(null, false);
+    },
+    credentials: true,
+  };
+
+  app.use(cors(corsOptions));
+  app.options('*', cors(corsOptions));
 
   app.use(express.json());
   app.use(cookieParser());

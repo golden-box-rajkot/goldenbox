@@ -1,7 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../api';
 
 export default function AdminDashboard() {
+  const navigate = useNavigate();
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState<any>(null);
@@ -17,7 +20,9 @@ export default function AdminDashboard() {
 
   const checkSession = async () => {
     try {
-      const res = await fetch('/api/admin/session');
+      const res = await fetch(apiUrl('/api/admin/session'), {
+        credentials: 'include'
+      });
       if (res.ok) {
         const data = await res.json();
         setSession(data.user);
@@ -34,7 +39,9 @@ export default function AdminDashboard() {
 
   const fetchDashboard = async () => {
     try {
-      const res = await fetch('/api/admin/dashboard');
+      const res = await fetch(apiUrl('/api/admin/dashboard'), {
+        credentials: 'include'
+      });
       if (res.ok) {
         const data = await res.json();
         setDashboardData(data);
@@ -49,10 +56,11 @@ export default function AdminDashboard() {
     setLoginLoading(true);
     setAuthError('');
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(apiUrl('/api/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -68,7 +76,10 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
+    await fetch(apiUrl('/api/auth/logout'), {
+      method: 'POST',
+      credentials: 'include'
+    });
     setSession(null);
     setDashboardData(null);
   };
@@ -175,7 +186,7 @@ export default function AdminDashboard() {
         <h2 className="font-label text-xs font-bold tracking-[0.2em] uppercase mb-2 text-foreground">Management</h2>
         
         <button 
-          onClick={() => window.location.href = '/admin/categories'}
+          onClick={() => navigate('/admin/categories')}
           className="w-full border border-border p-4 flex justify-between items-center hover:bg-foreground hover:text-accent-foreground transition-colors cursor-pointer group bg-background rounded-none"
         >
           <span className="font-label text-[10px] font-bold tracking-[0.2em] uppercase">Manage Categories</span>
@@ -183,7 +194,7 @@ export default function AdminDashboard() {
         </button>
 
         <button 
-          onClick={() => window.location.href = '/admin/products'}
+          onClick={() => navigate('/admin/products')}
           className="w-full border border-border p-4 flex justify-between items-center hover:bg-foreground hover:text-accent-foreground transition-colors cursor-pointer group bg-background rounded-none"
         >
           <span className="font-label text-[10px] font-bold tracking-[0.2em] uppercase">Manage Products</span>

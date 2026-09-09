@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../api';
 
 export default function AdminCategories() {
   const [categories, setCategories] = useState<any[]>([]);
@@ -27,7 +28,9 @@ export default function AdminCategories() {
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/admin/categories');
+      const res = await fetch(apiUrl('/api/admin/categories'), {
+        credentials: 'include'
+      });
       if (res.status === 401) {
         navigate('/admin');
         return;
@@ -84,13 +87,14 @@ export default function AdminCategories() {
         displayOrder: parseInt(displayOrder, 10) || 0
       };
 
-      const url = editingId ? `/api/admin/categories/${editingId}` : '/api/admin/categories';
+      const url = apiUrl(editingId ? `/api/admin/categories/${editingId}` : '/api/admin/categories');
       const method = editingId ? 'PUT' : 'POST';
 
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        credentials: 'include'
       });
       
       const data = await res.json();

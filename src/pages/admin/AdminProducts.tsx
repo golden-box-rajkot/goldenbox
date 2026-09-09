@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ProductImage } from '../../types';
+import { apiUrl } from '../../api';
 
 export default function AdminProducts() {
   const [products, setProducts] = useState<any[]>([]);
@@ -33,8 +34,8 @@ export default function AdminProducts() {
     try {
       setLoading(true);
       const [prodRes, catRes] = await Promise.all([
-        fetch('/api/admin/products'),
-        fetch('/api/admin/categories')
+        fetch(apiUrl('/api/admin/products'), { credentials: 'include' }),
+        fetch(apiUrl('/api/admin/categories'), { credentials: 'include' })
       ]);
 
       if (prodRes.status === 401 || catRes.status === 401) {
@@ -113,13 +114,14 @@ export default function AdminProducts() {
         customFields
       };
 
-      const url = editingId ? `/api/admin/products/${editingId}` : '/api/admin/products';
+      const url = apiUrl(editingId ? `/api/admin/products/${editingId}` : '/api/admin/products');
       const method = editingId ? 'PUT' : 'POST';
 
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        credentials: 'include'
       });
       
       const data = await res.json();
