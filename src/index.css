@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #3F170D;
+  --muted-foreground: #A37B71;
+  --accent: #3F170D;
+  --accent-foreground: #FFFFFF;
+  --border: #3F170D;
+  --ring: #3F170D;
+  --muted: #F5F5F5;
+  --border-light: #E5E5E5;
+}
+
+@theme {
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-body: "Outfit", sans-serif;
+  --font-label: "JetBrains Mono", monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-muted: var(--muted);
+  --color-border-light: var(--border-light);
+}
+
+body {
+  background-color: var(--muted);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+
+@layer utilities {
+  .hidden-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hidden-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+

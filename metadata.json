@@ -1,0 +1,6 @@
+{
+  "name": "Golden Box",
+  "description": "A private-feeling member-access product catalog.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
