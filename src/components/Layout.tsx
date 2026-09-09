@@ -4,7 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 export default function Layout() {
   const location = useLocation();
-  const isAdmin = location.pathname.startsWith('/admin');
+  const isAdmin = location.pathname.startsWith('/admin') || (typeof window !== 'undefined' && window.location.pathname.includes('/admin'));
 
   return (
     <div className="min-h-[100dvh] w-full bg-background sm:bg-muted flex flex-col items-center justify-start sm:py-8 font-body selection:bg-foreground selection:text-accent-foreground">
