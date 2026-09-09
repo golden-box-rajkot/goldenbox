@@ -4,8 +4,32 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
+  // Sanitize VITE_API_BASE_URL to strip whitespace/newlines/trailing quotes or slashes
+  const rawApiUrl = process.env.VITE_API_BASE_URL;
+  let sanitizedApiUrl = rawApiUrl
+    ? rawApiUrl
+        .trim()
+        .replace(/[\r\n\t]/g, '')
+        .replace(/^["']|["']$/g, '')
+        .trim()
+        .replace(/\/+$/, '')
+    : '';
+
+  // In GitHub Pages builds (or when --base=./ is used), default to production Render URL
+  const isPagesBuild =
+    process.env.npm_lifecycle_event === 'build:pages' ||
+    process.argv.includes('--base=./');
+  if (!sanitizedApiUrl && isPagesBuild) {
+    sanitizedApiUrl = 'https://goldenboxapi.onrender.com';
+  }
+
   return {
     plugins: [react(), tailwindcss()],
+    define: sanitizedApiUrl
+      ? {
+          'import.meta.env.VITE_API_BASE_URL': JSON.stringify(sanitizedApiUrl),
+        }
+      : undefined,
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
