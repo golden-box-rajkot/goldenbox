@@ -63,18 +63,18 @@ export default function Catalog() {
   return (
     <main className="flex-grow flex flex-col relative bg-background text-foreground overflow-hidden">
       {view === 'landing' ? (
-        <div className="flex-grow flex flex-col overflow-y-auto hidden-scrollbar pb-32">
+        <div className="flex-grow flex flex-col overflow-y-auto hidden-scrollbar pb-12">
           {/* Brand Header */}
-          <div className="px-6 pt-8 pb-6 shrink-0 border-b border-border">
-            <h1 className="font-display text-4xl uppercase leading-[0.9] text-foreground">
+          <div className="px-4 sm:px-6 pt-6 sm:pt-8 pb-5 sm:pb-6 shrink-0 border-b border-border">
+            <h1 className="font-display text-3xl sm:text-4xl uppercase leading-[0.9] text-foreground">
               Golden<br />Box
             </h1>
-            <p className="font-body text-sm mt-4 text-foreground leading-relaxed max-w-[280px]">
+            <p className="font-body text-sm mt-3 sm:mt-4 text-foreground/90 leading-relaxed max-w-full">
               A curated collection of exceptional products.
             </p>
           </div>
           
-          <div className="p-6">
+          <div className="p-4 sm:p-6">
             {activeCategories.length === 0 ? (
               <div className="flex items-center justify-center text-center mt-12">
                 <p className="font-label text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
@@ -82,21 +82,21 @@ export default function Catalog() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-x-4 gap-y-6">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 {activeCategories.map(category => (
                   <div 
                     key={category.id} 
-                    className="flex flex-col cursor-pointer group"
+                    className="flex flex-col cursor-pointer group min-w-0"
                     onClick={() => handleCategoryClick(category.id)}
                   >
-                    <div className="aspect-square bg-muted border border-border mb-3 overflow-hidden relative">
+                    <div className="aspect-square bg-muted border border-border mb-2.5 sm:mb-3 overflow-hidden relative">
                       {category.image ? (
                         <img src={category.image} alt={category.name} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center font-label text-[8px] text-muted-foreground uppercase tracking-widest text-center px-1 leading-relaxed">No Image</div>
                       )}
                     </div>
-                    <h3 className="font-label text-[10px] font-bold tracking-[0.2em] uppercase text-center group-hover:underline decoration-1 underline-offset-2 break-words text-foreground">
+                    <h3 className="font-label text-[10px] sm:text-[11px] font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-center group-hover:underline decoration-1 underline-offset-2 break-words text-foreground px-1">
                       {category.name}
                     </h3>
                   </div>
@@ -106,36 +106,36 @@ export default function Catalog() {
           </div>
         </div>
       ) : (
-        <div className="flex-grow flex flex-col overflow-hidden">
+        <div className="flex-grow flex flex-col min-h-0 overflow-hidden">
           {/* Back Button Header */}
           <div className="shrink-0 border-b border-border">
             <button 
               onClick={handleBackToLanding}
-              className="w-full flex items-center gap-2 p-4 font-label text-[9px] font-bold tracking-[0.2em] uppercase text-foreground hover:bg-muted transition-colors cursor-pointer"
+              className="w-full flex items-center gap-2 p-3.5 sm:p-4 font-label text-[9px] sm:text-[10px] font-bold tracking-[0.2em] uppercase text-foreground hover:bg-muted transition-colors cursor-pointer"
             >
               ← BACK TO CATEGORIES
             </button>
           </div>
 
-          <div className="flex-grow flex overflow-hidden">
+          <div className="flex-grow flex min-h-0 overflow-hidden">
             {/* Left Sidebar */}
-            <nav className="w-24 shrink-0 border-r border-border overflow-y-auto hidden-scrollbar bg-background flex flex-col">
+            <nav className="w-20 sm:w-24 shrink-0 border-r border-border overflow-y-auto hidden-scrollbar bg-background flex flex-col">
               {activeCategories.length > 0 && activeCategories.map(category => (
                 <button 
                   key={category.id} 
                   onClick={() => setActiveCategoryId(category.id)}
-                  className={`p-3 flex flex-col items-center justify-center min-h-[80px] gap-3 border-b border-border transition-colors cursor-pointer ${
+                  className={`p-2.5 sm:p-3 flex flex-col items-center justify-center min-h-[72px] sm:min-h-[80px] gap-2 sm:gap-3 border-b border-border transition-colors cursor-pointer ${
                     activeCategoryId === category.id ? 'bg-foreground text-accent-foreground' : 'bg-background text-foreground hover:bg-muted'
                   }`}
                 >
                   {category.image ? (
-                    <div className={`w-8 h-8 shrink-0 bg-muted border ${activeCategoryId === category.id ? 'border-accent-foreground' : 'border-border'}`}>
+                    <div className={`w-7 h-7 sm:w-8 sm:h-8 shrink-0 bg-muted border ${activeCategoryId === category.id ? 'border-accent-foreground' : 'border-border'}`}>
                       <img src={category.image} alt="" className="w-full h-full object-cover" />
                     </div>
                   ) : (
-                    <div className={`w-8 h-8 shrink-0 bg-muted border ${activeCategoryId === category.id ? 'border-accent-foreground' : 'border-border'}`} />
+                    <div className={`w-7 h-7 sm:w-8 sm:h-8 shrink-0 bg-muted border ${activeCategoryId === category.id ? 'border-accent-foreground' : 'border-border'}`} />
                   )}
-                  <span className="font-label text-[9px] uppercase tracking-widest text-center leading-tight break-words w-full">
+                  <span className="font-label text-[8px] sm:text-[9px] uppercase tracking-wider text-center leading-tight break-words w-full">
                     {category.name}
                   </span>
                 </button>
@@ -143,7 +143,7 @@ export default function Catalog() {
             </nav>
 
             {/* Right Panel */}
-            <div className="flex-1 overflow-y-auto p-5 scroll-smooth relative">
+            <div className="flex-1 min-w-0 overflow-y-auto p-3.5 sm:p-5 scroll-smooth relative">
               {(() => {
                 const selectedCategory = activeCategories.find(c => c.id === activeCategoryId);
                 if (!selectedCategory) return null;
@@ -151,8 +151,8 @@ export default function Catalog() {
                 const categoryProducts = activeProducts.filter(p => p.categoryId === selectedCategory.id);
 
                 return (
-                  <div className="pb-32">
-                    <h2 className="font-label text-xs font-bold tracking-[0.2em] uppercase mb-6 pb-2 border-b border-border text-foreground">
+                  <div className="pb-12">
+                    <h2 className="font-label text-[11px] sm:text-xs font-bold tracking-[0.2em] uppercase mb-4 sm:mb-6 pb-2 border-b border-border text-foreground">
                       {selectedCategory.name}
                     </h2>
                     
@@ -163,22 +163,22 @@ export default function Catalog() {
                         </p>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-8">
+                      <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
                         {categoryProducts.map(product => (
-                          <div key={product.id} className="cursor-pointer group flex flex-col" onClick={() => setSelectedProduct(product)}>
-                            <div className="aspect-square bg-muted border border-border mb-3 overflow-hidden relative">
+                          <div key={product.id} className="cursor-pointer group flex flex-col min-w-0" onClick={() => setSelectedProduct(product)}>
+                            <div className="aspect-square bg-muted border border-border mb-2 sm:mb-3 overflow-hidden relative p-1.5 sm:p-2">
                               {product.images && product.images.length > 0 ? (
-                                <img src={product.images[0].url} alt={product.name} className="w-full h-full object-contain p-2" />
+                                <img src={product.images[0].url} alt={product.name} className="w-full h-full object-contain" />
                               ) : product.image ? (
-                                <img src={product.image} alt={product.name} className="w-full h-full object-contain p-2" />
+                                <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
                               ) : (
                                 <div className="w-full h-full flex items-center justify-center font-label text-[8px] text-muted-foreground uppercase tracking-widest text-center px-1 leading-relaxed">No Image</div>
                               )}
                             </div>
-                            <h3 className="font-body font-bold text-sm leading-tight group-hover:underline decoration-1 underline-offset-2 truncate text-foreground">
+                            <h3 className="font-body font-bold text-xs sm:text-sm leading-snug group-hover:underline decoration-1 underline-offset-2 line-clamp-2 text-foreground break-words">
                               {product.name}
                             </h3>
-                            <p className="font-body text-xs text-muted-foreground line-clamp-1 leading-relaxed mt-1">
+                            <p className="font-body text-[11px] sm:text-xs text-muted-foreground line-clamp-1 leading-relaxed mt-0.5">
                               {product.description}
                             </p>
                           </div>

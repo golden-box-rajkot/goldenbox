@@ -36,7 +36,7 @@ export default function ProductSheet({ product, onClose }: ProductSheetProps) {
 
   return (
     typeof document !== 'undefined' ? createPortal(
-    <div className="absolute inset-0 pointer-events-auto">
+    <div className="fixed inset-0 pointer-events-auto z-50">
       <AnimatePresence>
       {product && (
         <>
@@ -45,7 +45,7 @@ export default function ProductSheet({ product, onClose }: ProductSheetProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-foreground/40 z-40"
+            className="fixed inset-0 bg-foreground/40 z-40"
           />
           <motion.div
             initial={{ y: "100%" }}
@@ -60,10 +60,10 @@ export default function ProductSheet({ product, onClose }: ProductSheetProps) {
                 onClose();
               }
             }}
-            className="absolute bottom-0 left-0 right-0 h-[85%] bg-background border-t border-border z-50 flex flex-col"
+            className="fixed bottom-0 left-0 right-0 w-full sm:max-w-[440px] sm:left-1/2 sm:-translate-x-1/2 h-[88%] max-h-[90dvh] bg-background border-t border-border z-50 flex flex-col"
           >
             {/* Drag Handle & Close */}
-            <div className="flex justify-between items-center p-4 border-b border-border shrink-0 relative bg-background">
+            <div className="flex justify-between items-center p-3.5 sm:p-4 border-b border-border shrink-0 relative bg-background">
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="w-12 h-1 bg-border rounded-none opacity-30"></div>
               </div>
@@ -75,12 +75,12 @@ export default function ProductSheet({ product, onClose }: ProductSheetProps) {
             </div>
 
             {/* Scrollable Content */}
-            <div className="flex-grow overflow-y-auto p-5 flex flex-col hidden-scrollbar">
+            <div className="flex-grow overflow-y-auto p-4 sm:p-5 flex flex-col hidden-scrollbar">
               <div className="w-full shrink-0 mb-4 flex flex-col gap-2">
                 <div 
                   ref={scrollRef}
                   onScroll={handleScroll}
-                  className="w-full h-64 bg-muted border border-border relative flex overflow-x-auto snap-x snap-mandatory hidden-scrollbar"
+                  className="w-full h-56 sm:h-64 bg-muted border border-border relative flex overflow-x-auto snap-x snap-mandatory hidden-scrollbar"
                 >
                   {images.length > 0 ? (
                     images.map((img, idx) => (
@@ -104,7 +104,7 @@ export default function ProductSheet({ product, onClose }: ProductSheetProps) {
                 )}
               </div>
 
-              <h2 className="font-display text-3xl uppercase tracking-tight mb-2 text-foreground">{product.name}</h2>
+              <h2 className="font-display text-2xl sm:text-3xl uppercase tracking-tight mb-2 text-foreground">{product.name}</h2>
               <p className="font-body text-sm text-foreground/90 leading-relaxed mb-6">{product.description}</p>
 
               {product.customFields && product.customFields.length > 0 && (
@@ -123,12 +123,12 @@ export default function ProductSheet({ product, onClose }: ProductSheetProps) {
             </div>
 
             {/* Action Bar */}
-            <div className="p-4 border-t border-border bg-background shrink-0">
+            <div className="p-4 pb-[max(1rem,env(safe-area-inset-bottom))] border-t border-border bg-background shrink-0">
               <a 
                 href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-foreground text-accent-foreground py-4 font-label text-[11px] font-bold tracking-[0.2em] uppercase flex justify-center items-center gap-3 hover:bg-foreground/90 transition-colors border border-border rounded-none"
+                className="w-full bg-foreground text-accent-foreground py-3.5 sm:py-4 font-label text-[11px] font-bold tracking-[0.2em] uppercase flex justify-center items-center gap-3 hover:bg-foreground/90 transition-colors border border-border rounded-none"
               >
                 <MessageCircle className="w-4 h-4 text-[#25D366]" /> Order / Enquire
               </a>
